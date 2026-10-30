@@ -1,6 +1,7 @@
 {
   "name": "Reino de las Arañas",
   "short_name": "Arañas",
+  "description": "Estrategia por turnos, exploración y narrativa en el Reino de las Arañas. La humanidad lucha contra gigantes arañas que emergen sobre el reino.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
