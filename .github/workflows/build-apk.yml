@@ -1,0 +1,172 @@
+name: Build APK
+
+# Cada vez que subes cambios a main, esto empaqueta el juego DENTRO de una APK
+# (funciona sin Internet) y la publica en la pestaña "Releases" del repo.
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      BUILD: ${{ github.run_number }}
+      APK_NAME: reino-de-las-aranas.apk
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Preparar web (www) e inyectar aviso de actualización
+        run: |
+          mkdir -p www
+          cp index.html manifest.json icon-512.png www/
+          cat > update-check.js <<'EOF'
+          (function () {
+            var BUILD = __BUILD__;
+            var REPO = 'eddy970728/reino-de-las-aranas';
+            var APK = 'https://github.com/' + REPO + '/releases/latest/download/reino-de-las-aranas.apk';
+            function ask(n) {
+              var d = document.createElement('div');
+              d.style.cssText = 'position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:2147483647;background:#101a3a;color:#fff;border:1px solid #4a63c8;border-radius:12px;padding:12px 14px;font:600 14px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.6);display:flex;gap:10px;align-items:center';
+              var t = document.createElement('div');
+              t.style.flex = '1';
+              t.textContent = 'Hay una nueva versión del juego (v' + n + '). ¿Descargarla?';
+              d.appendChild(t);
+              function btn(txt, bg, fn) {
+                var b = document.createElement('button');
+                b.textContent = txt;
+                b.style.cssText = 'border:0;border-radius:8px;padding:10px 12px;font:700 13px system-ui,sans-serif;color:#fff;background:' + bg;
+                b.onclick = fn;
+                d.appendChild(b);
+              }
+              btn('Más tarde', '#39456b', function () {
+                try { localStorage.setItem('upd_skip', String(n)); } catch (e) {}
+                d.remove();
+              });
+              btn('Descargar', '#2f6fed', function () {
+                d.remove();
+                window.location.href = APK;
+              });
+              document.body.appendChild(d);
+            }
+            function check() {
+              if (navigator.onLine === false) return;
+              var ctl = new AbortController();
+              var to = setTimeout(function () { ctl.abort(); }, 6000);
+              fetch('https://api.github.com/repos/' + REPO + '/releases/latest', {
+                signal: ctl.signal, cache: 'no-store',
+                headers: { Accept: 'application/vnd.github+json' }
+              }).then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (j) {
+                  clearTimeout(to);
+                  if (!j || !j.tag_name) return;
+                  var n = parseInt(String(j.tag_name).replace(/\D/g, ''), 10);
+                  if (!(n > BUILD)) return;
+                  var skip = null;
+                  try { skip = localStorage.getItem('upd_skip'); } catch (e) {}
+                  if (String(skip) === String(n)) return;
+                  ask(n);
+                })
+                .catch(function () { /* sin Internet o error: se ignora y el juego sigue normal */ });
+            }
+            setTimeout(check, 4000);
+          })();
+          EOF
+          python3 - <<'PY'
+          import os
+          build = os.environ["BUILD"]
+          js = open("update-check.js", encoding="utf-8").read().replace("__BUILD__", build)
+          html = open("www/index.html", encoding="utf-8").read()
+          tag = "<script>" + js + "</script>"
+          i = html.rfind("</body>")
+          if i < 0:
+              raise SystemExit("No encontré </body> en index.html")
+          open("www/index.html", "w", encoding="utf-8").write(html[:i] + tag + html[i:])
+          PY
+          grep -q "var BUILD = ${BUILD};" www/index.html
+
+      - name: Crear proyecto Android con Capacitor
+        run: |
+          npm init -y >/dev/null
+          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.eddy970728.reinoaranas",
+            "appName": "Reino de las Arañas",
+            "webDir": "www"
+          }
+          EOF
+          npx cap add android
+          npx cap sync android
+
+      - name: Versión y icono
+        run: |
+          # versionCode debe subir en cada build para que Android acepte la actualización encima
+          sed -i -E "s/versionCode [0-9]+/versionCode ${BUILD}/; s/versionName \"[^\"]*\"/versionName \"1.0.${BUILD}\"/" android/app/build.gradle
+          grep -q "versionCode ${BUILD}" android/app/build.gradle
+          pip install pillow >/dev/null
+          python3 - <<'PY'
+          from PIL import Image
+          import os
+          src = Image.open("icon-512.png").convert("RGBA")
+          res = "android/app/src/main/res"
+          sizes = {"mdpi": (48, 108), "hdpi": (72, 162), "xhdpi": (96, 216),
+                   "xxhdpi": (144, 324), "xxxhdpi": (192, 432)}
+          for d, (legacy, fg) in sizes.items():
+              p = f"{res}/mipmap-{d}"
+              if not os.path.isdir(p):
+                  continue
+              for name in ("ic_launcher.png", "ic_launcher_round.png"):
+                  src.resize((legacy, legacy), Image.LANCZOS).save(f"{p}/{name}")
+              canvas = Image.new("RGBA", (fg, fg), (0, 0, 0, 0))
+              inner = int(fg * 0.78)
+              canvas.paste(src.resize((inner, inner), Image.LANCZOS), ((fg - inner) // 2,) * 2)
+              canvas.save(f"{p}/ic_launcher_foreground.png")
+          bg = f"{res}/values/ic_launcher_background.xml"
+          if os.path.exists(bg):
+              open(bg, "w").write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#0A1440</color>\n</resources>\n')
+          PY
+
+      - name: Compilar y firmar APK
+        working-directory: android
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          if [ -n "$KEYSTORE_BASE64" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            ./gradlew assembleRelease --no-daemon
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/reino.keystore"
+            BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+            UNSIGNED=app/build/outputs/apk/release/app-release-unsigned.apk
+            "$BT/zipalign" -p -f 4 "$UNSIGNED" "$RUNNER_TEMP/aligned.apk"
+            "$BT/apksigner" sign --ks "$RUNNER_TEMP/reino.keystore" --ks-key-alias reino \
+              --ks-pass env:KEYSTORE_PASSWORD --out "../$APK_NAME" "$RUNNER_TEMP/aligned.apk"
+            echo "### APK firmada con tu clave. Se puede instalar como actualización." >> "$GITHUB_STEP_SUMMARY"
+          else
+            ./gradlew assembleDebug --no-daemon
+            cp app/build/outputs/apk/debug/app-debug.apk "../$APK_NAME"
+            echo "### ⚠️ APK de prueba (sin clave propia). NO se podrá instalar encima de otra versión: configura los secrets KEYSTORE_BASE64 y KEYSTORE_PASSWORD." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${BUILD}" "$APK_NAME" \
+            --title "Versión ${BUILD}" \
+            --notes "Compilada desde el commit ${GITHUB_SHA::7}" \
+            --latest
