@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
@@ -295,6 +294,7 @@ body.tx2 #dl{font-size:19.5px}body.tx2 #amb button{font-size:16.5px}body.tx2 #am
 #crf .cr{display:flex;flex-direction:column;gap:5px;max-width:30em}#crf .cr i{font:700 11px var(--sk-disp);letter-spacing:.28em;color:var(--sk-oro);font-style:normal;text-transform:uppercase}#crf .cr b{font:500 clamp(16px,4.2vw,21px)/1.4 Georgia,serif;color:#eef2fb}
 @media (prefers-reduced-motion:reduce){#crf.on .rol{animation-duration:1ms}}
 #tm .osec{font:700 10.5px var(--sk-disp);letter-spacing:.24em;color:var(--sk-oro);text-transform:uppercase;margin:12px 6px -2px;opacity:.9;text-align:left;align-self:stretch}
+.fvb .fvp{font-size:13.5px;line-height:1.5;margin:2px 0;color:#e9e3d0;text-align:left;text-transform:none;letter-spacing:0}
 </style></head><body>
 <canvas id="cv"></canvas>
 <canvas id="hv"></canvas>
@@ -2041,16 +2041,18 @@ function menuLogros(){TM.innerHTML='';guarda(300);
  mb('◀ Volver',()=>menu('main'))}
 
 /* ===== creditos, feedback e historial ===== */
-const CORREO='edyrodes@gmail.com',VERSION='v1.0';
-function manualCopia(ok){try{const t=document.createElement('textarea');
- t.value=CORREO;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);
+const CORREO='edyrodes@gmail.com',KOFI='https://ko-fi.com/eddyrodes',PAYPAL='eddyrodes970728@icloud.com',VERSION='v1.0.2';
+function manualCopia(ok,txt){try{const t=document.createElement('textarea');
+ t.value=txt||CORREO;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);
  t.select();document.execCommand('copy');document.body.removeChild(t);ok()}catch(e){}}
-function copiaCorreo(b){
+function copiaCorreo(b,txt){txt=txt||CORREO;
  const ok=()=>{const t=b.textContent;b.textContent='✓ Copiado';SFX.pick();
   setTimeout(()=>{b.textContent=t},1600)};
  try{if(navigator.clipboard&&navigator.clipboard.writeText){
-  navigator.clipboard.writeText(CORREO).then(ok,()=>manualCopia(ok));return}}catch(e){}
- manualCopia(ok)}
+  navigator.clipboard.writeText(txt).then(ok,()=>manualCopia(ok,txt));return}}catch(e){}
+ manualCopia(ok,txt)}
+/* abre un enlace fuera del juego (en la app, Capacitor lo manda al navegador del movil) */
+function abreFuera(u){try{const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(e){}}}catch(e){}}
 /* ===== la partida fuera del navegador ===== */
 function partidaCodigo(){const o={};
  for(let i=0;i<LSO.length;i++){const k=LSO.key(i);if(k&&k.indexOf('ra_')==0)o[k]=rawG(k)}
@@ -2088,7 +2090,7 @@ function menuExport(){TM.innerHTML='';
  mb('⬆ Importar desde un código',pidePegar);
  mb('⬆ Importar desde un archivo',pideArchivo);
  mb('◀ Volver',()=>menu('opt'))}
-const CREDITOS=[['Un juego de LunaDog Games','Dise\u00f1ado, desarrollado y elaborado por una sola persona.'],['Direcci\u00f3n y dise\u00f1o de juego','Eddy Rodes'],['Guion e historia','Eddy Rodes'],['Programaci\u00f3n','Eddy Rodes'],['Arte y animaci\u00f3n','Eddy Rodes'],['M\u00fasica y efectos de sonido','Eddy Rodes'],['Dise\u00f1o de niveles','Eddy Rodes'],['Ideas y conceptos','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros'],['Pruebas de juego','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros'],['Agradecimientos','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros \u00b7 Ian Carlos \u00b7 Nazir Pel\u00e1ez \u00b7 Marianela Mulet'],['Con el apoyo de','Claude Agent'],['Una \u00faltima cosa','Esmeralda, Lian y Nela tambi\u00e9n cabalgan en este juego. No es casualidad.']];
+const CREDITOS=[['Un juego de LunaDog Games','Dise\u00f1ado, desarrollado y elaborado por una sola persona.'],['Direcci\u00f3n y dise\u00f1o de juego','Eddy Rodes'],['Guion e historia','Eddy Rodes'],['Programaci\u00f3n','Eddy Rodes'],['Arte y animaci\u00f3n','Eddy Rodes'],['M\u00fasica y efectos de sonido','Eddy Rodes'],['Dise\u00f1o de niveles','Eddy Rodes'],['Ideas y conceptos','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros'],['Pruebas de juego','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros'],['Agradecimientos','Esmeralda Pel\u00e1ez \u00b7 Lian Cisneros \u00b7 Ian Carlos \u00b7 Nazir Pel\u00e1ez \u00b7 Marianela Mulet'],['Con el apoyo de','Claude Agent'],['Invítame a un café','ko-fi.com/eddyrodes'],['Una \u00faltima cosa','Esmeralda, Lian y Nela tambi\u00e9n cabalgan en este juego. No es casualidad.']];
 function creditosFinales(){return new Promise(res=>{const E=document.getElementById('crf');if(!E){res();return}
  const cv2=E.querySelector('canvas'),R2=E.querySelector('.rol');
  R2.innerHTML='<div class="cl1">SPIDER KINGDOM</div><div class="cl2">A TACTICAL GAME</div><div class="cl3">El Reino de las Ara\u00f1as</div>'+CREDITOS.map(q=>'<div class="cr"><i>'+q[0]+'</i><b>'+q[1]+'</b></div>').join('')+'<div class="cl3">\u00a9 LunaDog Productions \u00b7 '+VERSION+'</div><div class="cl2 fin">GRACIAS POR JUGAR</div>';
@@ -2122,9 +2124,12 @@ function menuFeedback(){TM.innerHTML='';
   '?subject='+encodeURIComponent('Spider Kingdom '+VERSION)}catch(e){}});
  {const b=document.createElement('button');b.textContent='⧉ Copiar la dirección';
   b.onclick=()=>copiaCorreo(b);TM.appendChild(b)}
- mb2('☕ Invítame a un café','Algún día habrá una forma de invitarme a uno. De momento no hay nada que pagar: juega, pásalo bien y cuéntame qué te ha parecido.',()=>{});
+ mb2('☕ Invítame a un café','Si te gustó Spider Kingdom y quieres que haya secuela, puedes invitarme a un café. Es voluntario: el juego es y seguirá siendo gratis.',()=>{});
+ mb('☕ Abrir mi Ko-fi · tarjeta o PayPal',()=>abreFuera(KOFI));
+ {const b=document.createElement('button');b.textContent='⧉ Copiar el enlace de Ko-fi';b.onclick=()=>copiaCorreo(b,KOFI);TM.appendChild(b)}
+ {const b=document.createElement('button');b.className='two';b.innerHTML='<b>⧉ Copiar mi PayPal</b><small>'+PAYPAL+'</small>';b.onclick=()=>{copiaCorreo(b.querySelector('b'),PAYPAL)};TM.appendChild(b)}
  mb('◀ Volver',()=>menu('opt'))}
-const HISTORIAL=[["v1.0", "Versión completa", "Cada ranura es una partida propia y Continuar siempre sabe dónde vas.", ["Cada ranura guarda su propio grupo, oro, objetos, afinidad y dificultad.", "Continuar te lleva al punto correcto, también entre capítulos.", "Puedes repetir un capítulo superado para entrenar, sin cambiar la historia.", "Opciones ordenadas por grupos y la letra del título incluida en el juego."]], ["v0.5.2", "Pulido", "Menos toques accidentales, retratos para todos y texto letra a letra.", ["Un toque ya no puede pulsar el menú que acaba de aparecer debajo del dedo.", "Retratos para los personajes secundarios y caras mejor elegidas.", "El texto sale letra a letra, con su velocidad en Opciones, y se puede releer lo último que se dijo.", "Créditos finales, logros con icono y opción para daltónicos."]], ["v0.5", "La presentación", "Portada, menús y finales con cara nueva.", ["Portada Spider Kingdom con «pulsa para empezar» y un menú corto.", "Botones y diálogos con estilo nuevo, sonidos al tocar y retratos con expresiones.", "Carteles de capítulo a pantalla completa y epílogo ilustrado.", "Galería para volver a ver ilustraciones y charlas."]], ["v0.4", "El lavado de cara", "Guion reescrito, afinidad nueva y combate más exigente.", ["El guion entero reescrito para que todo cuadre de principio a fin.", "Tres charlas de afinidad por pareja y un epílogo que cambia según lo que consigas.", "Arañas más duras desde el capítulo II y una habilidad para cada jefa.", "El grupo ya no pierde niveles al cambiar de capítulo."]], ["v0.3", "Las armas y la tienda", "Armas propias, oro y una tienda entre capítulos.", ["Cada paladín tiene su arma propia con siete usos por nivel.", "Armas extra de un uso que se encuentran o se compran, y se pueden pasar a un compañero.", "Oro por arañas y objetivos, y una tienda entre capítulos."]], ["v0.2.1", "Arreglos", "Diálogos que ya no avanzan solos y otros arreglos.", ["Los diálogos ya no se pasan solos con dos dedos, una tecla mantenida o un mando gastado.", "Dos conversaciones ya no se pisan.", "El zoom con los gatillos ya no tiembla."]], ["v0.2", "Que se note que es táctico", "Previsión de combate, zona de peligro y heridos.", ["Antes de atacar ves cuánto haces y cuánto recibes.", "Toca una araña para ver hasta dónde llega.", "Quien cae se queda en el suelo y hay que recogerlo.", "Guardado automático y partida exportable."]], ["v0.1.2", "Marca y créditos", "La marca LunaDog al arrancar y la pantalla de créditos.", ["Logo de LunaDog al abrir el juego.", "Créditos, contacto e historial de versiones.", "Menús largos que se deslizan con dedo, rueda, teclado y mando."]], ["v0.1", "Ritmo y mandos", "Zoom libre y sonido del cursor.", ["Zoom con pellizco, rueda y gatillos.", "Tres sonidos de cursor a elegir."]], ["v0.0", "El principio", "La primera versión jugable.", ["Teclado y mando.", "El prólogo jugable."]]];
+const HISTORIAL=[["v1.0.2", "Una pregunta rápida", "Tras algunos capítulos, el juego te pregunta si te está gustando.", ["Al terminar el I, el II y el III.1 aparece una sola vez la pregunta «¿Te está gustando mi proyecto?».", "Después puedes contarme qué mejorarías, invitarme a un café o compartir el juego."]], ["v1.0.1", "Invítame a un café", "Ya se puede apoyar el juego desde Opciones.", ["En Opciones → Feedback hay un botón para abrir Ko-fi, y otros para copiar el enlace o el PayPal.", "El enlace de Ko-fi también aparece en los créditos."]], ["v1.0", "Versión completa", "Cada ranura es una partida propia y Continuar siempre sabe dónde vas.", ["Cada ranura guarda su propio grupo, oro, objetos, afinidad y dificultad.", "Continuar te lleva al punto correcto, también entre capítulos.", "Puedes repetir un capítulo superado para entrenar, sin cambiar la historia.", "Opciones ordenadas por grupos y la letra del título incluida en el juego."]], ["v0.5.2", "Pulido", "Menos toques accidentales, retratos para todos y texto letra a letra.", ["Un toque ya no puede pulsar el menú que acaba de aparecer debajo del dedo.", "Retratos para los personajes secundarios y caras mejor elegidas.", "El texto sale letra a letra, con su velocidad en Opciones, y se puede releer lo último que se dijo.", "Créditos finales, logros con icono y opción para daltónicos."]], ["v0.5", "La presentación", "Portada, menús y finales con cara nueva.", ["Portada Spider Kingdom con «pulsa para empezar» y un menú corto.", "Botones y diálogos con estilo nuevo, sonidos al tocar y retratos con expresiones.", "Carteles de capítulo a pantalla completa y epílogo ilustrado.", "Galería para volver a ver ilustraciones y charlas."]], ["v0.4", "El lavado de cara", "Guion reescrito, afinidad nueva y combate más exigente.", ["El guion entero reescrito para que todo cuadre de principio a fin.", "Tres charlas de afinidad por pareja y un epílogo que cambia según lo que consigas.", "Arañas más duras desde el capítulo II y una habilidad para cada jefa.", "El grupo ya no pierde niveles al cambiar de capítulo."]], ["v0.3", "Las armas y la tienda", "Armas propias, oro y una tienda entre capítulos.", ["Cada paladín tiene su arma propia con siete usos por nivel.", "Armas extra de un uso que se encuentran o se compran, y se pueden pasar a un compañero.", "Oro por arañas y objetivos, y una tienda entre capítulos."]], ["v0.2.1", "Arreglos", "Diálogos que ya no avanzan solos y otros arreglos.", ["Los diálogos ya no se pasan solos con dos dedos, una tecla mantenida o un mando gastado.", "Dos conversaciones ya no se pisan.", "El zoom con los gatillos ya no tiembla."]], ["v0.2", "Que se note que es táctico", "Previsión de combate, zona de peligro y heridos.", ["Antes de atacar ves cuánto haces y cuánto recibes.", "Toca una araña para ver hasta dónde llega.", "Quien cae se queda en el suelo y hay que recogerlo.", "Guardado automático y partida exportable."]], ["v0.1.2", "Marca y créditos", "La marca LunaDog al arrancar y la pantalla de créditos.", ["Logo de LunaDog al abrir el juego.", "Créditos, contacto e historial de versiones.", "Menús largos que se deslizan con dedo, rueda, teclado y mando."]], ["v0.1", "Ritmo y mandos", "Zoom libre y sonido del cursor.", ["Zoom con pellizco, rueda y gatillos.", "Tres sonidos de cursor a elegir."]], ["v0.0", "El principio", "La primera versión jugable.", ["Teclado y mando.", "El prólogo jugable."]]];
 function menuVersiones(){TM.innerHTML='';guarda(300);const t=document.createElement('div');t.className='gtit';t.textContent='HISTORIAL DE VERSIONES';TM.appendChild(t);
  const lst=document.createElement('div');lst.className='vlst';TM.appendChild(lst);
  HISTORIAL.forEach((q,k)=>{const c=document.createElement('button');c.className='vcard'+(k==0?' abierta':'');
@@ -2177,7 +2182,7 @@ function premioXP(hechas){const r=[];
 const fvFila=(a,b,cl)=>'<div class="fvr '+(cl||'')+'"><i>'+a+'</i><b>'+b+'</b></div>';
 const fvCaja=(ti,fl)=>'<div class="fvb"><h4>'+ti+'</h4>'+fl.join('')+'</div>';
 function fvBoton(t,f,g){const b=document.createElement('button');b.textContent=t;if(g)b.className='gold';
- b.onclick=()=>f();FVM.appendChild(b)}
+ b.onclick=()=>f();FVM.appendChild(b);return b}
 function fvAbrir(sub,ti){guarda(400);FVS.textContent=sub;FVT.textContent=ti;FVM.innerHTML='';
  document.body.classList.add('fv');FVE.hidden=false;FVE.scrollTop=0}
 function fvCerrar(){FVE.hidden=true;document.body.classList.remove('fv')}
@@ -2209,7 +2214,33 @@ async function finCap(){if(FINGO)return;FINGO=1;
  fvCerrar();
  if(v==1){FINGO=0;bz=false;newGame(CAP);return}
  if(v==2){FINGO=0;bz=false;titleOn();return}
+ await pideOpinion();
  await pantallaGuardado();FINGO=0;bz=false}
+/* ===== 1.0.2 · ¿te esta gustando? tras el I, el II y el III.1 (una vez por capitulo en cada dispositivo) ===== */
+const LINKJUEGO='https://github.com/eddy970728/reino-de-las-aranas/releases/latest';
+let FORZAOPI=0;
+const opiLee=()=>{try{return JSON.parse(rawG('ra_opi'))||{}}catch(e){return{}}};
+function opiGuarda(c,r){const o=opiLee();o['c'+c]={r,t:Date.now(),v:VERSION};rawS('ra_opi',JSON.stringify(o));
+ try{const q=JSON.parse(rawG('ra_opq')||'[]');q.push({c,r,t:Date.now(),v:VERSION});rawS('ra_opq',JSON.stringify(q.slice(-20)))}catch(e){}
+ try{enviaOpiniones()}catch(e){}}
+function enviaOpiniones(){/* se conectara al formulario cuando exista (ver hoja de ruta): de momento, la respuesta queda en el dispositivo */}
+async function compartir(b){const tx='Estoy jugando Spider Kingdom, un juego táctico gratis hecho por una sola persona. Pruébalo: '+LINKJUEGO;
+ try{if(navigator.share){await navigator.share({title:'Spider Kingdom',text:'Estoy jugando Spider Kingdom, un juego táctico gratis hecho por una sola persona. Pruébalo:',url:LINKJUEGO});return}}catch(e){if(e&&e.name=='AbortError')return}
+ copiaCorreo(b,tx)}
+async function pideOpinion(){if(!(CAP==1||CAP==2||CAP==31))return;if(SPD<.1&&!FORZAOPI)return;if(opiLee()['c'+CAP])return;
+ fvAbrir('UNA PREGUNTA RÁPIDA','¿TE ESTÁ GUSTANDO MI PROYECTO?');
+ FVC.innerHTML='<div class="fvb"><p class="fvp">Spider Kingdom lo hace una sola persona. Tu respuesta me ayuda a saber si voy por buen camino.</p></div>';
+ const r=await new Promise(res=>{fvBoton('👍  SÍ',()=>res('si'),1);fvBoton('👎  NO',()=>res('no'))});
+ opiGuarda(CAP,r);try{SFX.pick()}catch(e){}
+ fvAbrir(r=='si'?'¡GRACIAS!':'GRACIAS POR SER SINCERO','AYÚDAME A MEJORAR');
+ FVC.innerHTML='<div class="fvb"><p class="fvp">'+(r=='si'?'Me alegra mucho. Si quieres que el proyecto siga creciendo, puedes echarme una mano de varias formas. Todas son voluntarias.':'Me sirve mucho saberlo. Cuéntame qué cambiarías, y si aun así quieres apoyar el proyecto, aquí tienes cómo.')+'</p></div>';
+ await new Promise(res=>{
+  fvBoton('✉  CONTARTE QUÉ MEJORARÍA',()=>{try{location.href='mailto:'+CORREO+'?subject='+encodeURIComponent('Spider Kingdom '+VERSION+' · ideas')}catch(e){}});
+  fvBoton('☕  INVITARTE A UN CAFÉ · KO-FI',()=>abreFuera(KOFI));
+  const bp=fvBoton('⧉  COPIAR TU PAYPAL',()=>copiaCorreo(bp,PAYPAL));
+  const bc=fvBoton('📣  TE AYUDARÉ CON EL BOCA A BOCA',()=>compartir(bc));
+  fvBoton('▶  SEGUIR JUGANDO',()=>res(),1)});
+ fvCerrar()}
 async function pantallaGuardado(){
  const sig=NXT[CAP],nm=sig?CAPNOM[sig]:null;
  const caja=()=>{fvAbrir('PARTIDA '+CUR,'GUARDADA');
@@ -6593,5 +6624,3 @@ try{FOG=localStorage.getItem('ra_fog')=='0'?0:1;SPD=+localStorage.getItem('ra_sp
 introMarca().then(()=>{titleOn(1);requestAnimationFrame(frame)});
 
 </script></body></html>
-
-</body></html>
