@@ -1,0 +1,5 @@
+pruebas/node_modules/
+pruebas/package*.json
+pruebas/capturas/
+pruebas/*.png
+pruebas/resultado-*.json
