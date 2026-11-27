@@ -714,7 +714,7 @@ const A=f(a);return A=='campo'?f(b):A}
 function bgTono(){if(CAP==32||CAP==41||CAP==5)return 2;if(CAP==31)return 0;if(CAP==2||CAP==3)return 1;return 0}
 const LDIR={salon:[.56,-.72],campo:[.62,-.78],calle:[.6,-.8],plaza:[.64,-.77],fortaleza:[.42,-.52],nido:[-.45,.3],interior:[-.62,-.74]};
 function bgCfg(p,e){BGK=bgTipo(mp?mp[p.x+p.y*CW]:0,mp?mp[e.x+e.y*CW]:0);TONO=bgTono();
-if((CAP==41||CAP==5)&&BGK!='nido')BGK='fortaleza';
+if((CAP==41||CAP==5)&&BGK!='nido')BGK='fortaleza';if(CAP==0&&EP&&EP.f>=3)BGK='campo';
 if(BGK=='interior'&&CAP==32)TONO=2;if(BGK=='nido')TONO=Math.max(TONO,1);
 const L0=LDIR[BGK]||LDIR.campo;LX=L0[0];LY=L0[1];TNC.clear();AMC.clear()}
 function bg(n){const sc=S.sc,BL=-OXB-16,BR=CBW-OXB+16,BW2=BR-BL,BT=-OYB-20;
@@ -2113,7 +2113,7 @@ function menuLogros(){TM.innerHTML='';guarda(300);
  mb('◀ Volver',()=>menu('main'))}
 
 /* ===== creditos, feedback e historial ===== */
-const CORREO='lunadoggybrustudios@gmail.com',VERSION='v1.1.1';
+const CORREO='lunadoggybrustudios@gmail.com',VERSION='v1.1.2';
 function manualCopia(ok,txt){try{const t=document.createElement('textarea');
  t.value=txt||CORREO;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);
  t.select();document.execCommand('copy');document.body.removeChild(t);ok()}catch(e){}}
@@ -2193,7 +2193,7 @@ function menuFeedback(){TM.innerHTML='';
  mb('✉ Escribir un correo',()=>{try{location.href='mailto:'+CORREO+'?subject='+encodeURIComponent('Spider Kingdom: Awakening '+VERSION+' · sugerencias')}catch(e){}});
  {const b=document.createElement('button');b.textContent='⧉ Copiar la dirección';b.onclick=()=>copiaCorreo(b);TM.appendChild(b)}
  mb('◀ Volver',()=>menu('opt'))}
-const HISTORIAL=[["v1.1.1", "Spider Kingdom: Awakening", "La versión de lanzamiento en Google Play, con una interfaz nueva.", ["Nuevo nombre: Spider Kingdom: Awakening.", "Menús con estilo de videojuego, a elegir entre Piedra y oro o Estandarte real.", "Funciona con el botón atrás de Android y respeta las barras del sistema.", "Las partidas se copian solas en tu cuenta de Google al usar la copia de seguridad de Android.", "La música se pausa al salir de la app y los toques dobles ya no abren menús por error.", "Arreglado: guardar en el prólogo y continuar llevaba al capítulo I.", "Arreglado: un diálogo de Héctor en el capítulo V podía dejar el juego parado."]], ["v1.0", "Versión completa", "Cada ranura es una partida propia y Continuar siempre sabe dónde vas.", ["Cada ranura guarda su propio grupo, oro, objetos, afinidad y dificultad.", "Continuar te lleva al punto correcto, también entre capítulos.", "Puedes repetir un capítulo superado para entrenar, sin cambiar la historia.", "Opciones ordenadas por grupos y la letra del título incluida en el juego."]], ["v0.5.2", "Pulido", "Menos toques accidentales, retratos para todos y texto letra a letra.", ["Un toque ya no puede pulsar el menú que acaba de aparecer debajo del dedo.", "Retratos para los personajes secundarios y caras mejor elegidas.", "El texto sale letra a letra, con su velocidad en Opciones, y se puede releer lo último que se dijo.", "Créditos finales, logros con icono y opción para daltónicos."]], ["v0.5", "La presentación", "Portada, menús y finales con cara nueva.", ["Portada Spider Kingdom con «pulsa para empezar» y un menú corto.", "Botones y diálogos con estilo nuevo, sonidos al tocar y retratos con expresiones.", "Carteles de capítulo a pantalla completa y epílogo ilustrado.", "Galería para volver a ver ilustraciones y charlas."]], ["v0.4", "El lavado de cara", "Guion reescrito, afinidad nueva y combate más exigente.", ["El guion entero reescrito para que todo cuadre de principio a fin.", "Tres charlas de afinidad por pareja y un epílogo que cambia según lo que consigas.", "Arañas más duras desde el capítulo II y una habilidad para cada jefa.", "El grupo ya no pierde niveles al cambiar de capítulo."]], ["v0.3", "Las armas y la tienda", "Armas propias, oro y una tienda entre capítulos.", ["Cada paladín tiene su arma propia con siete usos por nivel.", "Armas extra de un uso que se encuentran o se compran, y se pueden pasar a un compañero.", "Oro por arañas y objetivos, y una tienda entre capítulos."]], ["v0.2.1", "Arreglos", "Diálogos que ya no avanzan solos y otros arreglos.", ["Los diálogos ya no se pasan solos con dos dedos, una tecla mantenida o un mando gastado.", "Dos conversaciones ya no se pisan.", "El zoom con los gatillos ya no tiembla."]], ["v0.2", "Que se note que es táctico", "Previsión de combate, zona de peligro y heridos.", ["Antes de atacar ves cuánto haces y cuánto recibes.", "Toca una araña para ver hasta dónde llega.", "Quien cae se queda en el suelo y hay que recogerlo.", "Guardado automático y partida exportable."]], ["v0.1.2", "Marca y créditos", "La marca LunaDog al arrancar y la pantalla de créditos.", ["Logo de LunaDog al abrir el juego.", "Créditos, contacto e historial de versiones.", "Menús largos que se deslizan con dedo, rueda, teclado y mando."]], ["v0.1", "Ritmo y mandos", "Zoom libre y sonido del cursor.", ["Zoom con pellizco, rueda y gatillos.", "Tres sonidos de cursor a elegir."]], ["v0.0", "El principio", "La primera versión jugable.", ["Teclado y mando.", "El prólogo jugable."]]];
+const HISTORIAL=[["v1.1.2", "Personajes y arreglos", "Cada personaje se reconoce de un vistazo, y el rescate de Héctor ya se puede ganar.", ["Todos los personajes del mapa redibujados, con su pelo, su ropa, sus objetos y los pies a la vista.", "Prólogo: los paladines del campamento esperan quietos hasta el entrenamiento, y el comandante va a por la araña.", "Rescate de Héctor: aguanta el triple mientras llegáis, y lleva su capucha.", "Capítulo III.1: Héctor todavía no lleva capucha.", "La panadera, el comerciante y los vecinos tienen retrato."]], ["v1.1.1", "Spider Kingdom: Awakening", "La versión de lanzamiento en Google Play, con una interfaz nueva.", ["Nuevo nombre: Spider Kingdom: Awakening.", "Menús con estilo de videojuego, a elegir entre Piedra y oro o Estandarte real.", "Funciona con el botón atrás de Android y respeta las barras del sistema.", "Las partidas se copian solas en tu cuenta de Google al usar la copia de seguridad de Android.", "La música se pausa al salir de la app y los toques dobles ya no abren menús por error.", "Arreglado: guardar en el prólogo y continuar llevaba al capítulo I.", "Arreglado: un diálogo de Héctor en el capítulo V podía dejar el juego parado."]], ["v1.0", "Versión completa", "Cada ranura es una partida propia y Continuar siempre sabe dónde vas.", ["Cada ranura guarda su propio grupo, oro, objetos, afinidad y dificultad.", "Continuar te lleva al punto correcto, también entre capítulos.", "Puedes repetir un capítulo superado para entrenar, sin cambiar la historia.", "Opciones ordenadas por grupos y la letra del título incluida en el juego."]], ["v0.5.2", "Pulido", "Menos toques accidentales, retratos para todos y texto letra a letra.", ["Un toque ya no puede pulsar el menú que acaba de aparecer debajo del dedo.", "Retratos para los personajes secundarios y caras mejor elegidas.", "El texto sale letra a letra, con su velocidad en Opciones, y se puede releer lo último que se dijo.", "Créditos finales, logros con icono y opción para daltónicos."]], ["v0.5", "La presentación", "Portada, menús y finales con cara nueva.", ["Portada Spider Kingdom con «pulsa para empezar» y un menú corto.", "Botones y diálogos con estilo nuevo, sonidos al tocar y retratos con expresiones.", "Carteles de capítulo a pantalla completa y epílogo ilustrado.", "Galería para volver a ver ilustraciones y charlas."]], ["v0.4", "El lavado de cara", "Guion reescrito, afinidad nueva y combate más exigente.", ["El guion entero reescrito para que todo cuadre de principio a fin.", "Tres charlas de afinidad por pareja y un epílogo que cambia según lo que consigas.", "Arañas más duras desde el capítulo II y una habilidad para cada jefa.", "El grupo ya no pierde niveles al cambiar de capítulo."]], ["v0.3", "Las armas y la tienda", "Armas propias, oro y una tienda entre capítulos.", ["Cada paladín tiene su arma propia con siete usos por nivel.", "Armas extra de un uso que se encuentran o se compran, y se pueden pasar a un compañero.", "Oro por arañas y objetivos, y una tienda entre capítulos."]], ["v0.2.1", "Arreglos", "Diálogos que ya no avanzan solos y otros arreglos.", ["Los diálogos ya no se pasan solos con dos dedos, una tecla mantenida o un mando gastado.", "Dos conversaciones ya no se pisan.", "El zoom con los gatillos ya no tiembla."]], ["v0.2", "Que se note que es táctico", "Previsión de combate, zona de peligro y heridos.", ["Antes de atacar ves cuánto haces y cuánto recibes.", "Toca una araña para ver hasta dónde llega.", "Quien cae se queda en el suelo y hay que recogerlo.", "Guardado automático y partida exportable."]], ["v0.1.2", "Marca y créditos", "La marca LunaDog al arrancar y la pantalla de créditos.", ["Logo de LunaDog al abrir el juego.", "Créditos, contacto e historial de versiones.", "Menús largos que se deslizan con dedo, rueda, teclado y mando."]], ["v0.1", "Ritmo y mandos", "Zoom libre y sonido del cursor.", ["Zoom con pellizco, rueda y gatillos.", "Tres sonidos de cursor a elegir."]], ["v0.0", "El principio", "La primera versión jugable.", ["Teclado y mando.", "El prólogo jugable."]]];
 function menuVersiones(){TM.innerHTML='';guarda(300);const t=document.createElement('div');t.className='gtit';t.textContent='HISTORIAL DE VERSIONES';TM.appendChild(t);
  const lst=document.createElement('div');lst.className='vlst';TM.appendChild(lst);
  HISTORIAL.forEach((q,k)=>{const c=document.createElement('button');c.className='vcard'+(k==0?' abierta':'');
@@ -2373,7 +2373,7 @@ async function xpScene(u,r){
 const X=S.xp={n:u.n,lv:r.lv0,g:r.g,v:r.xp0,mx:r.nd0,up:0,fl:-1e4,win:r.mur?1:0};
 await wait(r.mur?300:220);
 let resto=r.g,lv=r.lv0,v=r.xp0,nd=r.nd0;
-while(resto>0){const cabe=Math.min(resto,nd-v),v0=v;
+for(let vueltas=0;resto>0&&vueltas<40;vueltas++){const cabe=Math.min(resto,nd-v),v0=v;if(cabe<=0)break;
  await tw(Math.max(220,Math.min(700,cabe*10)),q=>{X.v=v0+cabe*q});
  v+=cabe;resto-=cabe;X.v=v;
  if(v>=nd&&resto>=0&&lv<r.lv0+r.up){SFX.lvl();lv++;nd=10*lv*lv+20*lv+70;v=0;
@@ -2745,21 +2745,7 @@ const TW=mkT(()=>{R(0,0,16,16,'#6f7490');R(0,5,16,1,'#4a4f68');R(0,11,16,1,'#4a4
 const TF=mkT(()=>{R(0,0,16,16,'#cdc5aa');R(0,0,16,1,'#b3ab90');R(0,0,1,16,'#b3ab90');R(8,8,8,1,'#b3ab90');R(8,0,1,8,'#b3ab90')});
 const TRH=mkT(()=>{R(0,0,16,16,'#a8402c');for(let y=0;y<16;y+=4)for(let x=0;x<16;x+=4)R(x+((y/4)%2?2:0),y,3,3,'#8e3222');R(0,13,16,3,'#5e2016');R(0,13,16,1,'#c2543a')}),TRY=mkT(()=>{R(0,0,16,16,'#f0c424');for(let y=0;y<16;y+=4)for(let x=0;x<16;x+=4)R(x+((y/4)%2?2:0),y,3,3,'#c99a10');R(0,13,16,3,'#8f6c06');R(0,13,16,1,'#ffe88a')}),TH=mkT(()=>{R(0,0,16,16,'#cbb089');R(0,0,16,2,'#8a6f4e');R(0,0,1,16,'#a98f68');R(15,0,1,16,'#a98f68');R(4,5,8,7,'#2e2318');R(4,5,8,1,'#8a6f4e');R(7,5,1,7,'#8a6f4e');R(4,8,8,1,'#8a6f4e')}),THY=mkT(()=>{R(0,0,16,16,'#efe0b4');R(0,0,16,2,'#c9a93e');R(0,0,1,16,'#dcc98c');R(15,0,1,16,'#dcc98c');R(4,5,8,7,'#3a2e18');R(4,5,8,1,'#c9a93e');R(7,5,1,7,'#c9a93e');R(4,8,8,1,'#c9a93e')}),TD=mkT(()=>{R(0,0,16,16,'#cbb089');R(0,0,16,2,'#8a6f4e');R(4,2,9,14,'#5a3a1f');R(4,2,9,1,'#3a2410');R(11,9,1,2,'#ffd84a')}),TDY=mkT(()=>{R(0,0,16,16,'#efe0b4');R(0,0,16,2,'#c9a93e');R(4,2,9,14,'#6a4a10');R(4,2,9,1,'#4a3208');R(11,9,1,2,'#fff');R(1,3,2,10,'#f0c424');R(13,3,2,10,'#f0c424')});
 function sprP(t,mv,p){const b=mv?Math.floor(t/90)%2:Math.floor(t/400)%2,l=mv?Math.floor(t/90)%2:0;
-if(p.pie){const pe=p.pe||'#2a1c10',st=mv?Math.floor(t/120)%2:0,bb=mv?0:Math.floor(t/520)%2;
- /* piernas */
- R(6,12+bb,2,3-st,'#33230f');R(9,12+bb,2,2+st,'#33230f');
- R(5,14+bb,3,1,'#1a1208');R(9,14+bb,3,1,'#1a1208');
- /* capa */
- R(3,5+bb,3,7,p.c);R(3,5+bb,1,7,'rgba(255,255,255,.18)');
- /* torso */
- R(5,5+bb,6,8,p.a);R(5,5+bb,6,1,'rgba(255,255,255,.28)');R(5,9+bb,6,1,p.b);
- /* brazo y lanza */
- R(11,7+bb,2,3,p.a);L(12,3+bb,12,15+bb,'#5a3a1f',1);R(11,2+bb,3,2,'#e8eef8');
- /* cabeza */
- if(p.fem){R(3,3+bb,1,4,pe);R(2,6+bb,1,3,pe);R(3,3+bb,1,1,'rgba(255,255,255,.3)');
-  R(6,2+bb,4,3,'#f2c8a0');R(5,1+bb,5,1,pe);R(5,2+bb,1,3,pe);R(9,3+bb,1,1,'#2a1a22')}
- else{R(6,2+bb,4,3,'#f2c8a0');R(5,1+bb,5,2,pe);R(5,3+bb,1,2,pe);R(9,3+bb,1,1,'#2a1a22')}
- R(4,13+bb,8,1,'rgba(0,0,0,.18)');return}
+if(p.pie){const rn=(ROS.find(r=>r[3]==p.a)||[])[0],PT=(typeof PORT!='undefined'&&PORT[rn])||{};persona(t,mv,{ro:p.a,ro2:p.b,pe:PT.pel||p.pe||'#2a1c10',pel:PT.pelo||(p.fem?'largo':'corto'),gafas:PT.gafas,pecas:PT.pecas,fem:p.fem,pan:'#33230f',zap:'#1e140a',cap:p.c,acc:'lanza',sk:'#f2c8a0'});return}
 R(1,8+b,2,3,'#2a1a10');R(3,8+b,9,4,p.h);R(3,8+b,9,1,'rgba(255,255,255,.25)');R(4,8+b,5,2,p.b);
 R(3,12,1,2-l,p.hd);R(5,12,1,1+l,p.hd);R(9,12,1,2-l,p.hd);R(11,12,1,1+l,p.hd);
 R(11,5+b,2,4,p.h);R(12,4+b,3,3,p.h);R(13,5+b,1,1,'#000');R(14,6+b,1,1,'#c99a78');
@@ -3033,33 +3019,81 @@ if(sx>=6&&sy>=6&&sx<VW-6&&sy<VH-6){const by=sy-17+pu*2;tri(sx,by,Math.PI/2,'#2a1
 else{const dx=sx-VW/2,dy=sy-VH/2,m=Math.max(Math.abs(dx)/(VW/2-12),Math.abs(dy)/(VH/2-12))||1,a=Math.atan2(dy,dx),
 ex=VW/2+dx/m-Math.cos(a)*(4-pu*1.5),ey=VH/2+dy/m-Math.sin(a)*(4-pu*1.5);
 tri(ex,ey,a,'#2a1d06',7);tri(ex+Math.cos(a),ey+Math.sin(a),a,'#ffd84a',5)}}
-const PERS={com:{ro:'#737b8c',pe:'#9aa0ab',cap:'#7a2a2a'},sol0:{ro:'#5a6472',pe:'#4a3a24'},nino:{ro:'#7a9a4a',pe:'#3a2a1a',alt:2},hector:{ro:'#4a5a7a',pe:'#3a2a1a'},elena:{ro:'#8a4a6a',pe:'#5a3a20',fal:1},
-nino1:{ro:'#d8c070',pe:'#6a4a20',alt:1},nino2:{ro:'#6aa8d0',pe:'#9a7a30',alt:2,jug:1},
-tomas:{ro:'#5a7a4a',pe:'#4a3a2a',man:1},mateo:{ro:'#9a8a6a',pe:'#d8d8d8',vir:1},
-panad:{ro:'#e8e0c8',pe:'#8a5a30',fal:1,ces:1},solda:{ro:'#8a8f9c',pe:'#2a2a2a',cas:1,lan:1},
-ancia:{ro:'#7a6a7a',pe:'#dcdcdc',alt:1,enc:1},telas:{ro:'#b06a4a',pe:'#3a2a1a',rol:1},
-vecin:{ro:'#6a7a5a',pe:'#5a4a30'}};
-function sprC(t,id,mv){const c=PERS[id]||PERS.vecin,b=Math.floor(t/(mv?110:430))%2,a=c.alt||0,dy=a?(a>1?4:2):0,hh=a?(a>1?5:6):7;
-const pl=mv?(b?1:0):0;R(4+a,12-(a?1:0)+dy+pl,3,4-dy/2-pl,'#4a3a2a');R(9-a,12-(a?1:0)+dy+(1-pl)*(mv?1:0),3,4-dy/2-(1-pl)*(mv?1:0),'#4a3a2a');
-R(3+a,5+b+dy,10-a*2,hh,c.ro);R(3+a,5+b+dy,10-a*2,1,'rgba(255,255,255,.25)');
-if(c.fal)R(3+a,10+b+dy,10-a*2,4-dy/2,c.ro);
-R(1+a,7+b+dy,3,4,c.ro);R(12-a,7+b+dy,3,4,c.ro);
-O(8,3+b+dy+(a?1:0),4-(a?1:0),4-(a?1:0),'#e8c8a0');R(6,2+b+dy,5,2,c.pe);
-R(6,3+b+dy,1,1,'#000');R(10,3+b+dy,1,1,'#000');
-if(c.enc){R(3,4+b,10,3,'#5a4a5a');R(2,6+b,12,6,c.ro)}
-if(c.cas){R(5,1+b,7,3,'#aeb4c2');R(5,3+b,7,1,'#6a7080');R(7,2+b,3,1,'#8a90a0')}
-if(c.lan)L(14,2+b,14,14,'#8a6a40',1),R(13,1+b,3,3,'#c8ced8');
-if(c.ces){R(1,9+b,4,4,'#c8a060');R(1,9+b,4,1,'#e0c080');R(2,10+b,1,1,'#f0e0a0')}
-if(c.man){R(3,8+b,10,6,'#e8e0d0');R(3,8+b,10,1,'#c8c0b0')}
-if(c.vir){R(1,11,3,2,'#d8c090');R(12,12,3,2,'#d8c090')}
-if(c.rol){R(0,8+b,3,7,'#b03a4a');R(13,8+b,3,7,'#3a6ab0')}
-if(c.jug){R(13,8+b+dy,3,4,'#a8814e');R(14,7+b+dy,1,2,'#8a6a3a')}}
+/* ===== 1.1.2 · personajes del mapa redibujados: cada uno con su pelo, ropa y objeto, contorno y pies visibles ===== */
+const PERS={
+ com:{ro:'#8a919f',ro2:'#5e6574',pe:'#8a8a92',pel:'corto',bar:'#9a9aa2',cap:'#8a2a2a',pan:'#4a4f5c',zap:'#2a1d12',acc:'peto'},
+ sol0:{ro:'#6a7490',ro2:'#4a5270',pe:'#5a3a20',pel:'casco',pan:'#3a3a44',zap:'#2a1d12',acc:'lanza'},
+ solda:{ro:'#5a6488',ro2:'#3e4868',pe:'#5a4030',pel:'casco',bar:'#5a4030',bigote:1,pan:'#3a3a44',zap:'#2a1d12',acc:'lanza'},
+ nino:{ro:'#3a7a5a',ro2:'#2a5a42',pe:'#3a2a1a',pel:'revuelto',alt:2,pan:'#5a4a30',zap:'#3a2614'},
+ hector:{ro:'#3a4a70',ro2:'#242c42',pe:'#5a5a62',pel:'corto',bar:'#6a6a70',pan:'#2e2a26',zap:'#1e140a',acc:'cinto'},
+ elena:{ro:'#6a8a5a',ro2:'#4a6a3a',pe:'#4a2a1a',pel:'mono',fem:1,fal:1,zap:'#3a2010',acc:'chal'},
+ nino1:{ro:'#4a6a9a',ro2:'#3a5278',pe:'#4a2a1a',pel:'revuelto',alt:1,pan:'#5a4a30',zap:'#3a2614'},
+ nino2:{ro:'#9a6a3a',ro2:'#7a522a',pe:'#5a3420',pel:'corto',alt:2,pan:'#4a4a5a',zap:'#3a2614',acc:'juguete',pecas:1},
+ tomas:{ro:'#b06a4a',ro2:'#8a5038',pe:'#5a3a22',pel:'calvo',bar:'#4a2e1a',bigote:1,pan:'#4a3a2a',zap:'#2a1d12',acc:'zurron'},
+ mateo:{ro:'#6a4a2a',ro2:'#4e361e',pe:'#7a7a84',pel:'calvo',bar:'#5a5a62',bigote:1,pan:'#3a342c',zap:'#2a1d12',acc:'baston'},
+ panad:{ro:'#e0a868',ro2:'#b8824a',pe:'#8a4a1e',pel:'gorroP',fem:1,fal:1,zap:'#4a2a14',acc:'pan'},
+ ancia:{ro:'#3a3a4a',ro2:'#2a2a36',pe:'#e4e4ea',pel:'mono',fem:1,fal:1,zap:'#2a1d12',acc:'baston',chep:1,chal2:'#8a6a4a'},
+ telas:{ro:'#c06a3a',ro2:'#984e26',pe:'#2a1a10',pel:'corto',bar:'#2a1a10',pan:'#5a3a5a',zap:'#2a1d12',acc:'telas'},
+ vecin:{ro:'#6a7a5a',ro2:'#4e5c40',pe:'#4a3420',pel:'corto',pan:'#4a3a2a',zap:'#2a1d12'}};
+const SPOL='#140e0a',SPK='#f0c8a0';
+function persona(t,mv,c,dx){dx=dx||0;
+ const k=c.alt==2?3:c.alt==1?1:0,b=mv?0:Math.floor(t/430)%2,st=mv?Math.floor(t/110)%2:0,sk=c.sk||SPK,F=[],D=[];
+ const r=(x,y,w,h,col)=>F.push([x+dx,y,w,h,col]),d=(x,y,w,h,col)=>D.push([x+dx,y,w,h,col]);
+ const hy=1+k+b+(c.chep?1:0),by=7+k+b+(c.chep?1:0),bh=c.alt==2?3:c.alt==1?4:5,ly=by+bh;
+ /* pies y piernas: zapatos claros sobre el contorno, separados */
+ const zp=c.zap||'#2a1d12',pa=c.pan||c.ro2;
+ if(!c.fal){r(5,ly,2,13-ly,pa);r(9,ly,2,13-ly,pa)}
+ r(4,13-(mv&&st?1:0),3,2,zp);r(9,13-(mv&&!st?1:0),3,2,zp);
+ /* cuerpo */
+ if(c.cap){r(3,by,10,bh+1,c.cap)}
+ if(c.fal){r(4,by,8,bh,c.ro);r(3,by+bh-2,10,13-(by+bh-2),c.ro)}else r(4,by,8,bh,c.ro);
+ r(3,by+1,1,bh-1,c.ro);r(12,by+1,1,bh-1,c.ro);
+ /* cabeza */
+ r(5,hy,6,5,sk);
+ const p=c.pe,pl=c.pel;
+ if(pl=='largo'){r(5,hy-1,6,2,p);r(4,hy,1,6,p);r(11,hy,1,6,p)}
+ else if(pl=='gorroP'){r(4,hy-2,8,2,'#f6f2e8');r(5,hy-3,6,1,'#f6f2e8');r(4,hy,1,4,p);r(11,hy,1,4,p);r(5,hy,6,1,p)}
+ else if(pl=='panuelo'){r(4,hy-1,8,3,c.pan2);r(4,hy+2,1,3,c.pan2);r(11,hy+2,1,3,c.pan2)}
+ else if(pl=='casco'){r(4,hy-1,8,3,'#a8b0bc');r(8,hy-2,1,1,'#c8ced8')}
+ else if(pl=='calvo'){r(5,hy+1,1,1,p);r(10,hy+1,1,1,p)}
+ else if(pl=='mono'){r(5,hy-1,6,2,p);r(7,hy-2,2,1,p);r(5,hy+1,1,1,p);r(10,hy+1,1,1,p)}
+ else if(pl=='raya'){r(5,hy-1,6,2,p);r(5,hy+1,2,1,p);r(10,hy+1,1,1,p)}
+ else if(pl=='trenza'){r(5,hy-1,6,2,p);r(4,hy,1,3,p);r(11,hy,1,7,p);r(12,hy+5,1,2,p)}
+ else if(pl=='revuelto'){r(5,hy-1,6,2,p);r(4,hy,1,2,p);r(11,hy,1,2,p);r(7,hy-2,1,1,p);r(9,hy-2,1,1,p)}
+ else{r(5,hy-1,6,2,p);r(5,hy+1,1,1,p);r(10,hy+1,1,1,p)}
+ /* objetos que llevan */
+ const a=c.acc;
+ if(a=='lanza'){r(13,1+b,1,13,'#7a5430');r(12,0+b,3,2,'#d8dee8')}
+ if(a=='baston'){r(13,by+1,1,13-by,'#8a6438');r(12,by,2,1,'#8a6438')}
+ if(a=='pan'){r(0,by+2,4,3,'#b8823c');r(0,by+2,4,1,'#e0b060')}
+ if(a=='juguete'){r(13,by,2,3,'#c8a060');r(14,by-1,1,1,'#a07a3a')}
+ if(a=='telas'){r(1,by-1,3,bh+1,'#3a6ab0');r(12,by-1,3,bh+1,'#c8384a')}
+ if(a=='zurron'){r(11,by+2,3,3,'#8a6034')}
+ /* contorno: marca el borde de cada pieza para que se lea sobre cualquier suelo */
+ F.forEach(q=>{R(q[0]-1,q[1],q[2]+2,q[3],SPOL);R(q[0],q[1]-1,q[2],q[3]+2,SPOL)});
+ F.forEach(q=>R(q[0],q[1],q[2],q[3],q[4]));
+ /* detalles sin contorno */
+ R(4+dx,by,8,1,'rgba(255,255,255,.22)');R(4+dx,by+bh-1,8,1,c.ro2);
+ if(c.gafas)R(5+dx,hy+2,6,1,'#9aa8c4');
+ if(c.pecas){R(6+dx,hy+3,1,1,'#c8805a');R(9+dx,hy+3,1,1,'#c8805a')}
+ if(c.fem){R(5+dx,hy+3,1,1,'#e89a90');R(10+dx,hy+3,1,1,'#e89a90');R(7+dx,hy+4,2,1,'#c0505a')}
+ R(6+dx,hy+2,1,1,'#1a1010');R(9+dx,hy+2,1,1,'#1a1010');
+ if(c.bar){R(6+dx,hy+4,4,1,c.bar);if(c.barL)R(6+dx,hy+5,4,1,c.bar);if(!c.bigote){R(5+dx,hy+3,1,2,c.bar);R(10+dx,hy+3,1,2,c.bar)}}
+ if(c.fal&&a=='pan'){R(5+dx,by+1,6,bh+2,'#fbf8f0');R(5+dx,by+1,6,1,'#ffffff')}
+ if(a=='chal'){R(4+dx,by,8,2,'#e8d8b0')}
+ if(c.chal2){R(3+dx,by,10,2,c.chal2)}
+ if(a=='cinto'){R(4+dx,by+3,8,1,'#5a3a18');R(10+dx,by+3,1,1,'#d8c070')}
+ if(a=='peto'){R(5+dx,by+1,6,3,'#b8c0cc');R(7+dx,by+1,2,1,'#e0e4ea')}
+ if(c.cap){R(3+dx,by+bh,1,1,c.cap)}
+ R(5+dx,13,3,1,'rgba(255,255,255,.12)');R(9+dx,13,3,1,'rgba(255,255,255,.12)')}
+function sprC(t,id,mv){persona(t,mv,PERS[id]||PERS.vecin)}
+const VECN=[{ro:'#8a6a40',ro2:'#6a4e2c',pe:'#5a4a30',pel:'corto',pan:'#4a3a2a'},{ro:'#7a5a8a',ro2:'#5a3e6a',pe:'#3a2414',pel:'largo',fem:1,fal:1}];
+function sprN(t){persona(t,0,VECN[0])}
 function sprH(t){const b=Math.floor(t/500)%2;R(5,2+b,7,10,'#2a2436');R(4,4+b,9,7,'#3a3450');R(6,3+b,5,3,'#120e1a');R(7,4+b,1,1,'#b0a0d0');R(9,4+b,1,1,'#b0a0d0');R(3,10+b,11,4,'#2a2436');R(2,12+b,12,2,'#1a1626');R(11,6+b,2,2,'#c8a848')}
-function sprN(t){const b=Math.floor(t/420)%2;R(4,11,3,4,'#4a3a2a');R(9,11,3,4,'#4a3a2a');R(3,5+b,10,7,'#8a6a40');R(3,5+b,10,1,'#a8865a');R(1,7+b,3,4,'#8a6a40');R(12,7+b,3,4,'#8a6a40');O(8,3+b,4,4,'#e8c8a0');R(5,1+b,7,2,'#5a4a30');R(6,3+b,1,1,'#000');R(10,3+b,1,1,'#000')}
 function dU(u,n){const px=Math.round(u.ux*TS-CX),py=Math.round(u.uy*TS-CY);if(px<-16||py<-16||px>VW||py>VH)return;X.save();if(u.fl){X.translate(px+16,py);X.scale(-1,1)}else X.translate(px,py);if(u.fl2&&n-u.fl2<320){if(Math.floor((n-u.fl2)/70)%2)X.globalAlpha=.45}else u.fl2=0;O(8,14,5,1,'rgba(0,0,0,.28)');if(u.hood)sprH(n);else if(u.id)sprC(n,u.id,u.mv);else if(u.t=='p')sprP(n,u.mv,u.pc);else if(u.t=='c')sprC(n,u.id,u.mv);else if(u.t=='h')sprH(n);else if(u.t=='n')sprN(n);else sprS(n,u.mv,u.k);X.globalAlpha=1;X.restore();
-if(u.done){X.globalAlpha=.4;R(px,py,16,16,'#000');X.globalAlpha=1}
+if(u.done&&!u.espera){X.globalAlpha=.4;R(px,py,16,16,'#000');X.globalAlpha=1}
 if(u==sel){R(px,py,16,1,'#ffd84a');R(px,py+15,16,1,'#ffd84a');R(px,py,1,16,'#ffd84a');R(px+15,py,1,16,'#ffd84a')}
-if(u.t=='c')return;const f=u.hp/u.mx;R(px+1,py+13,14,3,'#0a0e24');R(px+2,py+14,Math.round(12*f),1,DAL?(f>.5?'#5ab4ff':f>.25?'#f0e060':'#ff8a1a'):(f>.5?'#8ee05a':f>.25?'#f0c030':'#e04848'));
+if(u.t=='c')return;const f=u.hp/u.mx;R(px+1,py+15,14,3,'#0a0e24');R(px+2,py+16,Math.round(12*f),1,DAL?(f>.5?'#5ab4ff':f>.25?'#f0e060':'#ff8a1a'):(f>.5?'#8ee05a':f>.25?'#f0c030':'#e04848'));
 if(DAL&&u.t=='e'&&u.hp>0){R(px,py,4,1,'#fff');R(px,py,1,4,'#fff');R(px+1,py+1,2,1,'#ff8a1a');R(px+1,py+1,1,2,'#ff8a1a')}
 if(u.t=='p'&&u.hp>0&&!u.done&&phase=='player'&&!u.est&&units.some(q=>q.t=='p'&&q.hp>0&&q!=u&&!q.est&&adj(u,q)&&apoyoPuede(u.n,q.n))){const yb=py-5+Math.round(Math.sin(n/260));
  R(px+10,yb,7,5,'#ffe8a0');R(px+11,yb+5,2,1,'#ffe8a0');R(px+11,yb+1,1,1,'#c0304a');R(px+13,yb+1,1,1,'#c0304a');R(px+11,yb+2,3,1,'#c0304a');R(px+12,yb+3,1,1,'#c0304a')}}
@@ -3201,7 +3235,7 @@ if(tg&&tg.t=='n'){focus=e;look(e);await wait(300);const cz=CAP==32,c4=CAP==4,dm=
 else if(tg){focus=e;look(e);await wait(250);await fight(tg,e,'e');focus=null;if(chk())break}}
 focus=null;if(CAP==32&&EP&&EP.reinic==2){EP.reinic=0;await say([[N,'La seda se cierra del todo. Lo que hubiera dentro deja de moverse.']]);await amenu('Has perdido la crisálida.',[{t:'↻ INTENTARLO OTRA VEZ'}]);crisReset();return}
 if(CAP==31&&EP&&EP.reinic){EP.reinic=0;huidaReset();bz=false;return}
-if(!fin){turn++;phase='player';ENF=0;units.forEach(u=>{u.done=false;u.moved=false;if(u.t=='p'&&u.mor>0)u.mor--;if(u.t=='p'&&u.hp>0)u.hp=Math.min(u.mx,u.hp+(u.mor>0?2:1)*Math.ceil(u.mx*.02))});await devour();await revive();await heridosTurno();if((CAP==3||CAP==4)&&turn%7==0)await olaEspalda();autoSave();if(VIL.s==1&&VIL.w<3)await wave();mban('FASE DEL JUGADOR','rgba(40,80,200,.85)');await scenes()}bz=false;hint();enfoca()}
+if(!fin){turn++;phase='player';ENF=0;units.forEach(u=>{u.done=!!u.espera;u.moved=false;if(u.t=='p'&&u.mor>0)u.mor--;if(u.t=='p'&&u.hp>0)u.hp=Math.min(u.mx,u.hp+(u.mor>0?2:1)*Math.ceil(u.mx*.02))});await devour();await revive();await heridosTurno();if((CAP==3||CAP==4)&&turn%7==0)await olaEspalda();autoSave();if(VIL.s==1&&VIL.w<3)await wave();mban('FASE DEL JUGADOR','rgba(40,80,200,.85)');await scenes()}bz=false;hint();enfoca()}
 /* 0.4: una habilidad por jefa, cada dos turnos */
 const libreC=(x,y)=>x>=0&&y>=0&&x<CW&&y<CH&&!BLK[mp[x+y*CW]]&&!units.some(u=>(u.hp>0||u.est=='herida')&&u.x==x&&u.y==y);
 async function habJefa(e){if(e.habT&&turn-e.habT<2)return;const P=units.filter(p=>p.t=='p'&&p.hp>0);if(!P.length)return;
@@ -3230,7 +3264,7 @@ async function olaEspalda(){const P=units.filter(u=>u.t=='p'&&u.hp>0);if(!P.leng
 function endTurn(){if(phase!='player'||bz||fin||mode!='map')return;sel=null;enemyPhase()}
 function done(u){u.done=true;if(sel==u)sel=null;if(!units.some(p=>p.t=='p'&&p.hp>0&&!p.done))endTurn();hint()}
 function pick(u){SFX.sel();if(u.hp<=0){inf=null;OBE.hidden=false;const cg=u.est=='cargada'?units.find(q=>q.carga==u.n):null;
- OBE.textContent=u.est=='herida'?u.n+' en el suelo · recóge'+GLO(u)+' antes de '+u.tr+' turnos':u.est=='cargada'?u.n+' va a cuestas de '+(cg?cg.n+' · vuelve en '+cg.ct+' turnos':'alguien'):u.est=='grave'?u.n+' está fuera hasta el próximo episodio':u.n+' está herid'+GA(u)+' · vuelve en '+u.w+' turnos';return}inf=null;look(u);if(phase!='player'||bz||fin){inf=u;hint();return}if(u.done){inf=u;sel=null}else{sel=u;rg=u.moved?null:bfs(u.x,u.y,u.mvp||MV,occ(u))}hint()}
+ OBE.textContent=u.est=='herida'?u.n+' en el suelo · recóge'+GLO(u)+' antes de '+u.tr+' turnos':u.est=='cargada'?u.n+' va a cuestas de '+(cg?cg.n+' · vuelve en '+cg.ct+' turnos':'alguien'):u.est=='grave'?u.n+' está fuera hasta el próximo episodio':u.n+' está herid'+GA(u)+' · vuelve en '+u.w+' turnos';return}inf=null;look(u);if(phase!='player'||bz||fin||u.espera){inf=u;sel=null;rg=null;hint();return}if(u.done){inf=u;sel=null}else{sel=u;rg=u.moved?null:bfs(u.x,u.y,u.mvp||MV,occ(u))}hint()}
 const AM=document.getElementById('am'),AMT=document.getElementById('amt'),AMB=document.getElementById('amb');
 const amenu=(ti,o,op)=>new Promise(res=>{AM.className=(op&&op.cls)||'';AMT.textContent=ti;AMB.innerHTML='';o.forEach((x,i)=>{const b=document.createElement('button');if(x.h)b.innerHTML=x.h;else if(x.ic)b.innerHTML=icoH(x.ic)+'<span>'+x.t+'</span>';else b.textContent=x.t;if(x.g)b.className='gold';if(x.cl)b.className=x.cl;if(x.no)b.dataset.no='1';if(x.d){b.disabled=true;b.classList.add('dim')}else b.onclick=()=>{AM.hidden=true;AMB.innerHTML='';TRAGA=performance.now()+350;res(i)};AMB.appendChild(b)});AM.hidden=false;guarda(350);setTimeout(()=>{try{revisaMasb();if(KC.on)primerFoco()}catch(e){}},30)});
 async function actsH(u,ox,oy){for(;;){if(fin||u.done||u.hp<=0)return null;
@@ -3418,7 +3452,9 @@ if(tg.mun){const ef=w!='b'&&tg.wk==w;
  await wait(500);if(tg.hp<=0)mban('Mu\u00f1eco derribado','rgba(30,140,70,.9)');
  return()=>{done(u);scenes()}}
 await fight(u,tg,'p',w=='b'?null:w);return()=>{done(u);chk()}}}
-async function tap(tx,ty){if(mode!='map'||bz)return;
+let TAPB=0;
+async function tap(tx,ty){if(TAPB||mode!='map'||bz||!AM.hidden)return;TAPB=1;try{await tap0(tx,ty)}finally{TAPB=0}}
+async function tap0(tx,ty){
 {const cd=units.find(u=>u.est=='herida'&&u.x==tx&&u.y==ty);if(cd&&!units.some(u=>u.hp>0&&u.x==tx&&u.y==ty)){pick(cd);return}}const at=units.find(u=>u.hp>0&&u.x==tx&&u.y==ty&&(u.t=='p'||visT(u.x,u.y)));
 if(at&&at.t=='e')zonaPon(ZPE===at?null:at);else zonaPon(null);
 if(at){if(at.t=='p'){if(sel==at&&!at.done&&phase=='player'&&!fin){bz=true;const g0=MAPGEN;await scenes();
@@ -3513,6 +3549,10 @@ const PORT={
  'Niño':{pel:'#3a2a1a',peH:'#5a4028',arm:'#3a7a5a',armO:'#2a5a42',ac:'#e8d8b0',piel:'#f6d0ac',pelo:'revuelto',ojo:'#2a2a2a',nino:1},
  'Niña':{pel:'#8a5a2a',peH:'#a8743a',arm:'#b04a6a',armO:'#8a3650',ac:'#e8d8b0',piel:'#f6d2ae',pelo:'trenza',ojo:'#3a2a1a',fem:1,nino:1},
  'Don Mateo':{pel:'#5a5a62',peH:'#7a7a84',arm:'#6a4a2a',armO:'#4e361e',ac:'#c8a878',piel:'#e0b28c',pelo:'calvo',ojo:'#2a2a2a',bigote:'#4a4a52',mayor:1}};
+PORT['Panadera']={pel:'#8a4a1e',peH:'#a8642e',arm:'#e0a868',armO:'#b8824a',ac:'#fbf8f0',piel:'#f2caa6',pelo:'mono',ojo:'#3a2a1a',fem:1,pecas:1};
+PORT['Comerciante']={pel:'#2a1a10',peH:'#4a3020',arm:'#c06a3a',armO:'#984e26',ac:'#3a6ab0',piel:'#e0b48e',pelo:'corto',ojo:'#2a1a10',barba:'#2a1a10'};
+PORT['Vecino']=Object.assign({},PORT['Aldeano']);
+PORT['Héctor31']=Object.assign({},PORT['Héctor'],{pelo:'corto'});
 const PORTC={};
 const EXPRM=[['Tom\u00e1s','Pues te la devuelvo','s'],['Tom\u00e1s','Soy un hombre grande','s'],['Tom\u00e1s','Ya te dije que algo','s'],['Tom\u00e1s','Eso me parec\u00eda','s'],['Tom\u00e1s','No va a preguntar nadie','s'],['Tom\u00e1s','Esto me lo diste','n'],
  ['H\u00e9ctor','\u00a1Tom\u00e1s!','t'],['H\u00e9ctor','H\u00e9ctor Valera','t'],['H\u00e9ctor','Yo s\u00ed.','t'],['H\u00e9ctor','Por si alguien pregunta','t'],['H\u00e9ctor','Te he visto la cara','t'],['H\u00e9ctor','No.','e'],['Nela','Voy yo.','e'],['Lian','Que hoy lo ha tenido','t'],
@@ -3530,7 +3570,7 @@ function exprDeViejo(t){t=t||'';
  if(/(¡|!|lo sabían|y siguió|a por ella|fuera|basta|cállate|no te lo|no os)/i.test(t))return 'e';
  if(/(gracias|jaja|me encanta|bonito|guap|trato hecho|perfecto|genial|vale\.|bienvenid|encantad|precio de amigo|\bsí\b\.?$)/i.test(t))return 's';
  return 'n'}
-function retrato(n,ex0){const P=PORT[n];if(!P)return null;const k=n+ex0;if(PORTC[k])return PORTC[k];const ex=ex0[0],abre=ex0.indexOf('o')>0,cie=ex0.indexOf('c')>0;
+function retrato(n,ex0){if(n=='Héctor'&&CAP==31)n='Héctor31';const P=PORT[n];if(!P)return null;const k=n+ex0;if(PORTC[k])return PORTC[k];const ex=ex0[0],abre=ex0.indexOf('o')>0,cie=ex0.indexOf('c')>0;
  const c=document.createElement('canvas');c.width=32;c.height=32;const g=c.getContext('2d');
  const p=(x,y,w,h,col)=>{g.fillStyle=col;g.fillRect(x,y,w,h)};
  const w0=P.ancho?1:0;
@@ -4141,7 +4181,7 @@ function aClaro(){MAPGEN++;ENF=0;sel=null;rg=null;inf=null;focus=null;pdiReset()
  const viv=units.filter(u=>u.t=='p');
  viv.forEach((u,i)=>{u.x=u.ux=L0B.ent[0]-1+i;u.y=u.uy=L0B.ent[1];u.moved=false;u.done=false});
  units=viv;
- [2,1,3].forEach((idx,i)=>{const q=L0B.grupo[i];units.push(mkPal(ROS[idx],q[0],q[1]))});
+ [2,1,3].forEach((idx,i)=>{const q=L0B.grupo[i];const g=mkPal(ROS[idx],q[0],q[1]);g.espera=1;g.done=true;units.push(g)});
  units.push(mkCom(L0B.com[0],L0B.com[1]));
  units.push(mkSol(L0B.sold[0],L0B.sold[1]));
  const p0=units[0];focus=p0;look(p0);
@@ -4178,8 +4218,11 @@ async function comFight(){
  const ar={t:'e',k:'s',n:'Criatura',lv:3,hp:150,mx:150,a:7,df:3,c:6,
   x:L0B.ara[0],y:L0B.ara[1],ux:L0B.ara[0],uy:L0B.ara[1],fl:true,mv:0,quieta:1};
  units.push(ar);focus=ar;look(ar);await wait(900);
+ {const bl=(x,y)=>units.some(u=>u!==com&&u!==ar&&u.hp>0&&u.x==x&&u.y==y),r=bfs(com.x,com.y,999,bl);
+  const ad=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy])=>[ar.x+dx,ar.y+dy]).filter(([x,y])=>x>=0&&y>=0&&x<CW&&y<CH&&r.d[x+y*CW]>=0).sort((a,b)=>r.d[a[0]+a[1]*CW]-r.d[b[0]+b[1]*CW])[0];
+  if(ad){focus=com;look(com);await wait(300);await walk(com,pathTo(r,ad[0],ad[1]),150);com.fl=ar.x<com.x;ar.fl=com.x<ar.x;await wait(400)}}
  const falso={t:'p',n:'Comandante',pie:1,arm:0,pc:{a:'#737b8c',b:'#4a5160',c:'#7a2a2a',pe:'#9aa0ab',fem:0},
-  fp:FPCOM,lv:9,hp:46,mx:46,a:22,df:9,c:28,pot:0,wp:{l:0,s:0,a:0},x:com.x,y:com.y,ux:com.x,uy:com.y};
+  fp:FPCOM,lv:9,hp:46,mx:46,a:22,df:9,c:28,pot:0,wp:{l:0,s:0,a:0},x:com.x,y:com.y,ux:com.x,uy:com.y};focus=com;
  CINE=1;
  /* Combate 1: pega flojo, le esquivan, crítico del 20%, y le devuelven 1 */
  GUI=[{l:'p',cr:0,d:10},{l:'e',ms:1},{l:'p',cr:1,d:30},{l:'e',cr:0,d:1}];GUIN=0;
@@ -4241,6 +4284,7 @@ async function c0run(){
  if(EP.f==3&&['Nela','Eddy'].every(n=>{const u=units.find(q=>q.n==n);
   return u&&Math.abs(u.x-L0B.claro[0])+Math.abs(u.y-L0B.claro[1])<=7})){EP.f=4;bz=true;
   await say(D0CINCO);await say(D0TRAIN);
+  units.forEach(u=>{if(u.espera){u.espera=0;u.done=false}});
   L0B.mun.forEach((q,i)=>units.push(mkMun(q[0],q[1],i)));
   mban('Derriba los tres muñecos','rgba(190,120,30,.9)');
   await amenu('Los muñecos no se mueven ni devuelven los golpes. Acércate a uno y elige ATACAR.\n\nCada enemigo es débil a un arma. El menú de ataque te dice a cuál.',[{t:'◀ ENTENDIDO'}]);
@@ -4556,7 +4600,7 @@ const D4SIL=[
 let SC4=0;
 const D4POS={doc1:[24,103],doc2:[40,106],doc3:[58,103]};
 function ep4New(){EP={f:0,ms:{car:0,voc:0,gua:0,inv:0,sil:0},doc:0,hec:0,tom:0,llave:0,cri:0,reinic:0,fin:0}}
-const mkHec4=(x,y)=>({t:'n',id:'hec4',n:'Figura encapuchada',lv:1,hp:60,mx:60,a:0,df:0,c:0,x,y,ux:x,uy:y,fl:false,mv:0,done:true});
+const mkHec4=(x,y)=>({t:'n',id:'hec4',hood:1,n:'Figura encapuchada',lv:1,hp:180,mx:180,a:0,df:0,c:0,x,y,ux:x,uy:y,fl:false,mv:0,done:true});
 const mkCri4=(x,y,i)=>({t:'c',id:'cri'+i,n:'Crisálida',lv:1,hp:20,mx:20,a:0,df:0,c:0,x,y,ux:x,uy:y,fl:false,mv:0,done:true,vac:i==1||i==4});
 function cercoHec(){const L=L4.call2,q=libre(L[0],L[1])||L;
  units.push(mkHec4(q[0],q[1]));
@@ -5510,7 +5554,7 @@ focus=null;return}}
 async function casaFinal(){await say(DCASA);await salirPuerta();EP.fase=6;await combateHector()}
 async function combateHector(){const H=E31.casaH,bx=H[0],by=H[1];
 units=[];
-const h=mkC('hector','Héctor',bx,by+1,5);h.nof=0;h.hp=h.mx=80;h.a=26;h.df=5;h.c=18;h.pot=2;h.arm=1;h.lv=12;
+const h=mkC('hector','Héctor',bx,by+1,5);h.nof=0;h.fp={ro:'#3a4a70',ro2:'#28324c',sk:'#dcb08c',cp:'#3a4a70',pe:'#5a5a62',hood:0,gor:0};h.hp=h.mx=80;h.a=26;h.df=5;h.c=18;h.pot=2;h.arm=1;h.lv=12;
 h.wp={k:99,m:99,l:0,s:0,a:0};units.push(h);
 [['elena',bx-1,by+1],['nino1',bx+1,by+1],['nino2',bx+1,by+2]].forEach(([id,x,y])=>{const q=libre(x,y);if(q)units.push(mkN(id,q[0],q[1]))});
 [[bx,by+5],[bx-3,by+4],[bx+3,by+4],[bx-1,by+8]].forEach(([x,y],i)=>{const q=libre(x,y);if(!q)return;
@@ -6673,7 +6717,7 @@ addEventListener('keydown',e=>{if(!TI.hidden&&TI.classList.contains('pre')){sale
 function dibujaAranaLogo(){const c=document.getElementById('tlsp');if(!c||c.dataset.ok)return;c.dataset.ok=1;const x=c.getContext('2d');
  const M=['..k.....k..','...k...k...','k..kkkkk..k','.kkkkkkkkk.','..kkrkrkk..','.kkkkkkkkk.','k..kkkkk..k','...k...k...','..k.....k..'];
  M.forEach((r,y)=>[...r].forEach((ch,i)=>{if(ch=='.')return;x.fillStyle=ch=='r'?'#ff3a44':'#e6ebf7';x.fillRect(i,y,1,1)}))}
-async function pause(){if(mode!='map'||bz||!TI.hidden)return;bz=true;
+async function pause(){if(mode!='map'||bz||!TI.hidden||!AM.hidden)return;bz=true;
 for(;;){const o=[{t:'\u25b6 CONTINUAR',k:'x',g:1,no:1},{t:'Guardar',k:'sv',d:!!fin,ic:'guardar',cl:'sq'},{t:'Afinidad',k:'af',ic:'afinidad',cl:'sq'},{t:'Historial',k:'hi',ic:'historial',cl:'sq'},{t:'Ayuda',k:'ay',ic:'ayuda',cl:'sq'},{t:'Reiniciar misi\u00f3n',k:'rs',ic:'reiniciar',cl:'fila'},{t:'Volver al t\u00edtulo',k:'ti',ic:'salir',cl:'fila rojo'}];
 const nm=CAPNOM[CAP]||['?',''];const c=o[await amenu((CAP==0?'Pr\u00f3logo':'Cap\u00edtulo '+nm[0])+(nm[1]?' \u00b7 '+nm[1]:'')+' \u00b7 Turno '+turn,o,{cls:'hoja'})].k;
 if(c=='x'){bz=false;hint();return}
@@ -6691,7 +6735,7 @@ const left=units.filter(u=>u.t=='p'&&u.hp>0&&!u.done).length;
 if(left){bz=true;const r=await amenu('Todav\u00eda '+(left==1?'queda 1 palad\u00edn sin actuar.':'quedan '+left+' paladines sin actuar.')+' \u00bfTerminar el turno igualmente?',[{t:'TERMINAR TURNO'},{t:'\u25c0 VOLVER'}]);bz=false;if(r){hint();return}}
 endTurn()}
 function irA(u){pick(u);look(u);hint()}
-async function menuCampo(){if(mode!='map'||bz||fin)return;
+async function menuCampo(){if(mode!='map'||bz||fin||!AM.hidden)return;
  const vivos=units.filter(u=>u.t=='p'&&u.hp>0),esp=vivos.filter(u=>!u.done);
  bz=true;
  try{for(;;){
